@@ -1,0 +1,73 @@
+deploy TOKEN GEM ERC20
+
+deploy points ERC20
+    set shop-address
+deploy nft-tickets 721
+    set shop-address
+deploy nft-pass 721
+deploy nft-starship 1155
+deploy nft-asset 1155
+    set shop-address
+    set totalSupply each id
+deploy claim
+    set listcontract
+
+deploy play-explore
+deploy shop
+
+
+deploy staking-starship
+
+
+
+
+testing:
+- mint GEM
+- allowed GEM with shop contract
+
+
+200000000000000000000
+--------------------------lacking:
+
+asset: 1155
+- change based uri
+- meta url increment
+- re-setup url
+- total_supply can revert back
+- read list of ids and full ids + supply
+- duplicate functions totalSupply
+
+
+ticket: 712
+- wheres the supply?
+- address -> listing owned ids
+- change based uri
+- autoALLOWED/approve to explore contract?
+
+nftShip: 1155
+- 
+
+points:
+- make it soulbond
+
+
+claim:
+- after remove, listed still working? need to add struct
+    - seems listed error, also error the next one (remove the removal indices)
+
+shop:
+- price is multiple
+- product is paused, discount?
+- withdraw token ERC20
+
+- finish the distributions (after tokenomic finalized)
+- refactor contract-add-lib and minting to manager
+//sold ? by events?
+
+
+explore:
+- add allow nft to reuse?
+- withdraw?
+
+library: 
+* allowed-contract: need to read full alloweds
