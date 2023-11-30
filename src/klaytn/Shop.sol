@@ -2,7 +2,8 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@klaytn/contracts/KIP/interfaces/IKIP7.sol";
+
 
 interface IUniversalClaim {
   function mintToken(address to, uint256 amount) external; // respective to erc20
@@ -195,18 +196,18 @@ contract Shop is Ownable {
     } else {
       // Handle ERC20 token transfer
       // Check allowance and balance for the selected payment token
-      uint256 allowance = IERC20(paymentToken).allowance(
+      uint256 allowance = IKIP7(paymentToken).allowance(
         msg.sender,
         address(this)
       );
-      uint256 buyerBalance = IERC20(paymentToken).balanceOf(msg.sender);
+      uint256 buyerBalance = IKIP7(paymentToken).balanceOf(msg.sender);
 
       require(paymentAmount <= allowance, "Token allowance not sufficient");
       require(paymentAmount <= buyerBalance, "Token balance not sufficient");
 
       // Transfer tokens from the buyer to the contract
       require(
-        IERC20(paymentToken).transferFrom(
+        IKIP7(paymentToken).transferFrom(
           msg.sender,
           address(this),
           paymentAmount
@@ -221,15 +222,14 @@ contract Shop is Ownable {
 
     // TODO: REUSE MANAGER CLAIM CONTRACT INSTEAD
      if (tokenType == 2) {
-        // ERC721
+        // KIP-17
         IUniversalClaim(product.nftAddress)
           .mintCollectible(msg.sender);
       } else if (tokenType == 3) {
-        // ERC1155
+        // KIP-37
         IUniversalClaim(product.nftAddress)
           .mintCollectibleId(msg.sender, product.id_token, quantity);
       }
-
 
       //send points later
   }

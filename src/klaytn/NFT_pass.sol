@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-
+import "@klaytn/contracts/KIP/token/KIP17/KIP17.sol";
+import "@klaytn/contracts/KIP/token/KIP17/extensions/KIP17Enumerable.sol";
+import "@klaytn/contracts/KIP/token/KIP17/extensions/KIP17URIStorage.sol";
+import "@klaytn/contracts/access/Ownable.sol";
 //integrating with ticket nft
-contract SeasonPASS is ERC721, ERC721URIStorage, Ownable {
+contract SeasonPASS is KIP17, KIP17Enumerable, KIP17URIStorage, Ownable {
   uint256 private _nextTokenId;
 
   // Mapping to store the expiration date for each NFT
@@ -18,9 +18,7 @@ contract SeasonPASS is ERC721, ERC721URIStorage, Ownable {
   // Mapping to store allowed contracts for minting
   mapping(address => bool) public allowedContracts;
 
-  constructor(address initialOwner)
-    ERC721("Season PASS", "PASS")
-    Ownable(initialOwner)
+    constructor() KIP17("TICKET", "TICKET") 
   {
     // Initialize the expiration length (e.g., 365 days)
     // expirationLength = 30 days;
@@ -77,23 +75,34 @@ function isExpired(uint256 tokenId) public view returns (bool) {
     expirationLength = newExpirationLength;
   }
 
+
   // The following functions are overrides required by Solidity.
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId)
+        internal
+        override(KIP17, KIP17Enumerable)
+    {
+        super._beforeTokenTransfer(from, to, tokenId);
+    }
 
-  function tokenURI(uint256 tokenId)
-    public
-    view
-    override(ERC721, ERC721URIStorage)
-    returns (string memory)
-  {
-    return super.tokenURI(tokenId);
-  }
+    function _burn(uint256 tokenId) internal override(KIP17, KIP17URIStorage) {
+        super._burn(tokenId);
+    }
 
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    override(ERC721, ERC721URIStorage)
-    returns (bool)
-  {
-    return super.supportsInterface(interfaceId);
-  }
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(KIP17, KIP17URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(KIP17, KIP17Enumerable)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
+    }
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@klaytn/contracts/KIP/interfaces/IKIP17.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract PlayExplore is Ownable {
@@ -35,10 +35,10 @@ contract PlayExplore is Ownable {
     // Function to lock an NFT in this contract
     function lockNFT(address nftContract, uint256 tokenId) external {
         require(acceptedNFTs[nftContract], "NFT not accepted");
-        require(IERC721(nftContract).ownerOf(tokenId) == msg.sender, "Not the owner of the NFT");
+        require(IKIP17(nftContract).ownerOf(tokenId) == msg.sender, "Not the owner of the NFT");
 
         // Transfer the NFT to this contract
-        IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
+        IKIP17(nftContract).transferFrom(msg.sender, address(this), tokenId);
 
         // Update the total locked NFT count
         totalLockedNFTs++;

@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@klaytn/contracts/KIP/token/KIP17/KIP17.sol";
+import "@klaytn/contracts/KIP/token/KIP17/extensions/KIP17Enumerable.sol";
+import "@klaytn/contracts/KIP/token/KIP17/extensions/KIP17URIStorage.sol";
+import "@klaytn/contracts/access/Ownable.sol";
 
-contract TICKET is ERC721, ERC721URIStorage, Ownable {
+
+contract TICKET is KIP17, KIP17Enumerable, KIP17URIStorage, Ownable {
     uint256 private _nextTokenId;
 
     // Mapping to store rarity tiers for each tokenId
@@ -18,9 +20,15 @@ contract TICKET is ERC721, ERC721URIStorage, Ownable {
     mapping(address => bool) public allowedContracts;
 
     constructor(address initialOwner)
-        ERC721("TICKET", "TICKET")
+        KIP17("TICKET", "TICKET")
         Ownable(initialOwner)
     {}
+
+    // Modifier to allow only Shop contracts to call mintFromShopContract
+    modifier onlyShop() {
+        require(allowedContracts[msg.sender], "Only allowed Shop contract can call this function");
+        _;
+    }
 
     function _baseURI() internal pure override returns (string memory) {
         return "https://metadata/";
@@ -46,12 +54,6 @@ contract TICKET is ERC721, ERC721URIStorage, Ownable {
         // rarityTiers[tokenId] = tier;
     }
 
-    // Modifier to allow only Shop contracts to call mintFromShopContract
-    modifier onlyShop() {
-        require(allowedContracts[msg.sender], "Only allowed Shop contract can call this function");
-        _;
-    }
-
     // Function to mint tokens from the Shop contract
     function mintCollectible(
         address to
@@ -63,11 +65,24 @@ contract TICKET is ERC721, ERC721URIStorage, Ownable {
     }
 
     // The following functions are overrides required by Solidity.
+        // The following functions are overrides required by Solidity.
+
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId)
+        internal
+        override(KIP17, KIP17Enumerable)
+    {
+        super._beforeTokenTransfer(from, to, tokenId);
+    }
+
+    function _burn(uint256 tokenId) internal override(KIP17, KIP17URIStorage) {
+        super._burn(tokenId);
+    }
+
 
     function tokenURI(uint256 tokenId)
         public
         view
-        override(ERC721, ERC721URIStorage)
+        override(KIP17, KIP17URIStorage)
         returns (string memory)
     {
         return super.tokenURI(tokenId);
@@ -76,7 +91,7 @@ contract TICKET is ERC721, ERC721URIStorage, Ownable {
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        override(ERC721, ERC721URIStorage)
+        override(KIP17, KIP17Enumerable)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);

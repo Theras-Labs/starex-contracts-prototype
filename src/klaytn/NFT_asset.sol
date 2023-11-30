@@ -1,21 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@klaytn/contracts/KIP/token/KIP37/KIP37.sol";
+import "@klaytn/contracts/access/Ownable.sol";
+import "@klaytn/contracts/KIP/token/KIP37/extensions/KIP37Supply.sol";
+import "@klaytn/contracts/KIP/interface/IKIP7.sol";
 
-contract AssetContract is ERC1155, Ownable {
+
+contract AssetContract is KIP37, Ownable, KIP37Supply {
   // Mapping to store the total supply for each token ID
   mapping(uint256 => uint256) public tokenTotalSupply;
 
   // Mapping to store allowed contracts for minting
   mapping(address => bool) public allowedContracts;
 
-  constructor(address initialOwner)
-    ERC1155("https://metadata")
-    Ownable(initialOwner)
-  {}
-
+  constructor() KIP37("https://assetmetadata") {}
   // Modifier to allow only Shop contracts to call mintFromContract
   modifier onlyShop() {
     require(
@@ -44,6 +43,18 @@ contract AssetContract is ERC1155, Ownable {
     allowedContracts[contractAddress] = false;
   }
 
+
+      function setURI(string memory newuri) public onlyOwner {
+        _setURI(newuri);
+    }
+
+  
+    function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+        public
+        onlyOwner
+    {
+        _mintBatch(to, ids, amounts, data);
+    }
   // Function to mint tokens from another contract
   function mintCollectibleId(
     address to,
@@ -61,4 +72,6 @@ contract AssetContract is ERC1155, Ownable {
   function getTokenTotalSupply(uint256 tokenId) public view returns (uint256) {
     return tokenTotalSupply[tokenId];
   }
+
+
 }

@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
+import "@klaytn/contracts/KIP/token/KIP7/KIP7.sol";
+import "@klaytn/contracts/access/Ownable.sol";
+import "@klaytn/contracts/KIP/token/KIP7/extensions/draft-KIP7Permit.sol";
 
 error EX__NotStore(address sender);
 error EX__NotOwner(address sender);
 error EX__ZeroPoints(address sender);
 error EX__AddressZero();
 
-contract ExPoints is ERC20, Ownable, ERC20Permit {
+contract EXPOINTS is KIP7, Ownable, KIP7Permit {
        address public store;
 
     event PointsIssued(address indexed sender, uint256 indexed points);
@@ -26,11 +26,7 @@ contract ExPoints is ERC20, Ownable, ERC20Permit {
         _;
     }
 
-    constructor(address initialOwner)
-        ERC20("ExPoints", "EXPoints")
-        Ownable(initialOwner)
-        ERC20Permit("ExPoints")
-    {}
+ constructor() KIP7("EXPOINTS", "POINT") KIP7Permit("EXPOINTS") {}
 
     function mintToken(address to, uint256 points) external onlyShop {
         _mint(to, points * 10**18);
@@ -51,5 +47,17 @@ contract ExPoints is ERC20, Ownable, ERC20Permit {
     // Function for the owner to remove an allowed contract
     function removeAllowedContract(address contractAddress) public onlyOwner {
         allowedContracts[contractAddress] = false;
+    }
+
+        function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override
+        returns (bool)
+    {
+        return
+            interfaceId == type(IKIP7Permit).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 }
