@@ -1,11 +1,19 @@
-import { ethers } from "hardhat";
 import { BigNumber, Contract, Signer } from "ethers";
+import { ethers } from "hardhat";
 
 async function main() {
+  // Get the deployer's signer address
   const [deployer] = await ethers.getSigners();
-  // console.log(deployer.address);
+  console.log(`Deployer address: ${deployer.address}`);
 
-  // FACTORIES
+  // Fetch the current gas price from the network
+  const gasPrice = await ethers.provider.getGasPrice();
+  console.log(
+    `Current gas price: ${gasPrice.toString()} wei`,
+    gasPrice.mul(40)
+  );
+
+  // Contract Factories
   const ExPoints__factory = await ethers.getContractFactory("ExPoints");
   const tokenGEMFactory = await ethers.getContractFactory("EXGEM");
   const nftAssetFactory = await ethers.getContractFactory("AssetContract");
@@ -16,23 +24,46 @@ async function main() {
   const ManagerClaim__factory = await ethers.getContractFactory("ManagerClaim");
   const PlayExplore__factory = await ethers.getContractFactory("PlayExplore");
 
-  // DEPLOY
-  const EXPOINTS = await ExPoints__factory.deploy(deployer.address);
-  const TOKEN_GEM = await tokenGEMFactory.deploy(deployer.address);
-  const NFT_ASSET = await nftAssetFactory.deploy(deployer.address);
-  const NFT_TICKET = await nftTicketFactory.deploy(deployer.address);
-  const NFT_PASS = await nftPassFactory.deploy(deployer.address);
-  const NFT_STARSHIP = await nftStarShipFactory.deploy(deployer.address);
+  // Deploy contracts with dynamically fetched gas price
+  const EXPOINTS = await ExPoints__factory.deploy(deployer.address, {
+    gasPrice: gasPrice.mul(40), // You can adjust the multiplier as needed
+  });
+  const TOKEN_GEM = await tokenGEMFactory.deploy(deployer.address, {
+    gasPrice: gasPrice.mul(40), // You can adjust the multiplier as needed
+  });
+  const NFT_ASSET = await nftAssetFactory.deploy(deployer.address, {
+    gasPrice: gasPrice.mul(40), // You can adjust the multiplier as needed
+  });
+  const NFT_TICKET = await nftTicketFactory.deploy(deployer.address, {
+    gasPrice: gasPrice.mul(40), // You can adjust the multiplier as needed
+  });
+  const NFT_PASS = await nftPassFactory.deploy(deployer.address, {
+    gasPrice: gasPrice.mul(40), // You can adjust the multiplier as needed
+  });
+  const NFT_STARSHIP = await nftStarShipFactory.deploy(deployer.address, {
+    gasPrice: gasPrice.mul(40), // You can adjust the multiplier as needed
+  });
+
+  // Deploy Shop contract with dependencies
   const SHOP = await Shop__factory.deploy(
     deployer.address,
     EXPOINTS.address,
-    deployer.address
+    deployer.address,
+    { gasPrice: gasPrice.mul(40) } // You can adjust the multiplier as needed
   );
-  const MANAGER_CLAIM = await ManagerClaim__factory.deploy(deployer.address);
-  const PLAY_EXPLORE = await PlayExplore__factory.deploy(deployer.address, [
-    NFT_TICKET.address,
-  ]);
 
+  const MANAGER_CLAIM = await ManagerClaim__factory.deploy(deployer.address, {
+    gasPrice: gasPrice.mul(40), // You can adjust the multiplier as needed
+  });
+
+  // Deploy PlayExplore contract with dependencies
+  const PLAY_EXPLORE = await PlayExplore__factory.deploy(
+    deployer.address,
+    [NFT_TICKET.address],
+    { gasPrice: gasPrice.mul(40) }
+  ); // You can adjust the multiplier as needed
+
+  // Log deployed contract addresses
   console.log(
     "Addresses: \n",
     `EXPOINTS: ${EXPOINTS.address} \n`,
