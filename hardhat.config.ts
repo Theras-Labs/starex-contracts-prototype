@@ -27,8 +27,8 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.ACCOUNT_KEY !== undefined ? [process.env.ACCOUNT_KEY] : [],
       // 1001
-      gas: DEFAULT_BLOCK_GAS_LIMIT,
-      gasPrice: 80000000000,
+      // gas: DEFAULT_BLOCK_GAS_LIMIT,
+      // gasPrice: 80000000000,
     },
     klaytn: {
       url: "https://public-en-baobab.klaytn.net",

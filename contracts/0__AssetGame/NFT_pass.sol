@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+// import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+// import "@openzeppelin/contracts/access/Ownable.sol";
+import "../_viction/VRC725/VRC725.sol";
 
 /// @title A season pass to automate exploration without ticket
 /// @author 0xdellwatson
 /// @notice this nft has expired time
-contract SeasonPASS is ERC721, ERC721URIStorage, Ownable {
+contract SeasonPASS is VRC725 {
   uint256 private _nextTokenId;
 
   // Mapping to store the expiration date for each NFT
@@ -20,10 +21,8 @@ contract SeasonPASS is ERC721, ERC721URIStorage, Ownable {
   // Mapping to store allowed contracts for minting
   mapping(address => bool) public allowedContracts;
 
-  constructor(address initialOwner)
-    ERC721("Season PASS", "PASS")
-    Ownable(initialOwner)
-  {
+  constructor(address _initialOwner) {
+    __VRC725_init("Season PASS", "PASS", msg.sender);
     // Initialize the expiration length (e.g., 365 days)
     // expirationLength = 30 days;
     expirationLength = 300; // 5mins
@@ -43,32 +42,31 @@ contract SeasonPASS is ERC721, ERC721URIStorage, Ownable {
     return "https://metadata/";
   }
 
-
   function mintCollectible(address to) external onlyShop {
     uint256 tokenId = _nextTokenId++;
     _safeMint(to, tokenId);
-    _setTokenURI(tokenId, "todo-uri");
+    // _setTokenURI(tokenId, "todo-uri");
 
     // Set the expiration date for the minted NFT
     expirationDates[tokenId] = block.timestamp + expirationLength;
   }
 
-// Function to check if an NFT is expired
-function isExpired(uint256 tokenId) public view returns (bool) {
+  // Function to check if an NFT is expired
+  function isExpired(uint256 tokenId) public view returns (bool) {
     require(ownerOf(tokenId) != address(0), "Token does not exist");
     return block.timestamp > expirationDates[tokenId];
-}
+  }
 
-
-    // Function for the owner to add an allowed contract
+  // Function for the owner to add an allowed contract
   function addAllowedContract(address contractAddress) public onlyOwner {
-      allowedContracts[contractAddress] = true;
+    allowedContracts[contractAddress] = true;
   }
 
   // Function for the owner to remove an allowed contract
   function removeAllowedContract(address contractAddress) public onlyOwner {
-      allowedContracts[contractAddress] = false;
+    allowedContracts[contractAddress] = false;
   }
+
   // Function to read the expiration date of an NFT
   function getExpirationDate(uint256 tokenId) public view returns (uint256) {
     return expirationDates[tokenId];
@@ -81,21 +79,21 @@ function isExpired(uint256 tokenId) public view returns (bool) {
 
   // The following functions are overrides required by Solidity.
 
-  function tokenURI(uint256 tokenId)
-    public
-    view
-    override(ERC721, ERC721URIStorage)
-    returns (string memory)
-  {
-    return super.tokenURI(tokenId);
-  }
+  // function tokenURI(uint256 tokenId)
+  //   public
+  //   view
+  //   override(ERC721, ERC721URIStorage)
+  //   returns (string memory)
+  // {
+  //   return super.tokenURI(tokenId);
+  // }
 
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    override(ERC721, ERC721URIStorage)
-    returns (bool)
-  {
-    return super.supportsInterface(interfaceId);
-  }
+  // function supportsInterface(bytes4 interfaceId)
+  //   public
+  //   view
+  //   override(ERC721, ERC721URIStorage)
+  //   returns (bool)
+  // {
+  //   return super.supportsInterface(interfaceId);
+  // }
 }
