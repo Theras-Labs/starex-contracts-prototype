@@ -8,8 +8,8 @@ This repository contains the Solidity smart contracts that govern various aspect
 ## Branches Overview
 
 - [**master:**](#master) This branch serves as the main hub for information and project overview.
-- [**klaytn-hackathon:**](#klaytn-hackathon) Submitted for the Klaytn hackathon.
-- [**injective-hackathon:**](#injective-hackathon) Submitted for the Injective hackathon.
-- [**viction-hackathon:**](#viction-hackathon) Submitted for the Viction hackathon.
+- [**klaytn-hackathon:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/klaytn-hackathon) Submitted for the Klaytn hackathon.
+- [**injective-hackathon:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/injective-hackathon) Submitted for the Injective hackathon.
+- [**viction-hackathon:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/viction-hackathon) Submitted for the Viction hackathon.
 
 > ⚠️ **Important Note:** Each branch may have different implementations and results, even if the hackathon duration is the same. Each Hackathons may have different developments, some focusing exclusively on mobile development or contract development. Please review the README in each branch for specific details about the submission.
