@@ -1,34 +1,23 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-/// @title A season pass to automate exploration without ticket
-/// @author 0xdellwatson
-/// @notice this nft has expired time
-contract SeasonPASS is ERC721, ERC721URIStorage, Ownable {
-  uint256 private _nextTokenId;
+contract AssetContract is ERC1155, Ownable {
+  // Mapping to store the total supply for each token ID
+  mapping(uint256 => uint256) public tokenTotalSupply;
 
-  // Mapping to store the expiration date for each NFT
-  mapping(uint256 => uint256) public expirationDates;
-
-  // State variable to control the length of the expiration (in seconds)
-  uint256 public expirationLength;
+  // Mapping to store the expiration time for each token ID
+  mapping(uint256 => uint256) public tokenExpirationTime;
 
   // Mapping to store allowed contracts for minting
   mapping(address => bool) public allowedContracts;
 
   constructor(address initialOwner)
-    ERC721("Season PASS", "PASS")
+    ERC1155("https://metadata")
     Ownable(initialOwner)
-  {
-    // Initialize the expiration length (e.g., 365 days)
-    // expirationLength = 30 days;
-    expirationLength = 300; // 5mins
-    // expirationLength = 1 hours;
-  }
+  {}
 
   // Modifier to allow only Shop contracts to call mintFromContract
   modifier onlyShop() {
@@ -39,63 +28,50 @@ contract SeasonPASS is ERC721, ERC721URIStorage, Ownable {
     _;
   }
 
-  function _baseURI() internal pure override returns (string memory) {
-    return "https://metadata/";
+  // Function to set the total supply for a specific token ID
+  function setTokenTotalSupply(uint256 tokenId, uint256 totalSupply)
+    public
+    onlyOwner
+  {
+    require(totalSupply > 0, "Total supply must be greater than 0");
+    tokenTotalSupply[tokenId] = totalSupply;
   }
 
-
-  function mintCollectible(address to) external onlyShop {
-    uint256 tokenId = _nextTokenId++;
-    _safeMint(to, tokenId);
-    _setTokenURI(tokenId, "todo-uri");
-
-    // Set the expiration date for the minted NFT
-    expirationDates[tokenId] = block.timestamp + expirationLength;
+  // Function to set the expiration time for a specific token ID
+  function setTokenExpirationTime(uint256 tokenId, uint256 expirationTime)
+    public
+    onlyOwner
+  {
+    tokenExpirationTime[tokenId] = expirationTime;
   }
 
-// Function to check if an NFT is expired
-function isExpired(uint256 tokenId) public view returns (bool) {
-    require(ownerOf(tokenId) != address(0), "Token does not exist");
-    return block.timestamp > expirationDates[tokenId];
-}
+  // Function to check if a pass is expired or not
+  function isPassExpired(uint256 tokenId) public view returns (bool) {
+    return
+      tokenExpirationTime[tokenId] > 0 &&
+      block.timestamp > tokenExpirationTime[tokenId];
+  }
 
-
-    // Function for the owner to add an allowed contract
+  // Function to add an allowed contract
   function addAllowedContract(address contractAddress) public onlyOwner {
-      allowedContracts[contractAddress] = true;
+    allowedContracts[contractAddress] = true;
   }
 
-  // Function for the owner to remove an allowed contract
+  // Function to remove an allowed contract
   function removeAllowedContract(address contractAddress) public onlyOwner {
-      allowedContracts[contractAddress] = false;
-  }
-  // Function to read the expiration date of an NFT
-  function getExpirationDate(uint256 tokenId) public view returns (uint256) {
-    return expirationDates[tokenId];
+    allowedContracts[contractAddress] = false;
   }
 
-  // Function for the owner to change the expiration length
-  function setExpirationLength(uint256 newExpirationLength) public onlyOwner {
-    expirationLength = newExpirationLength;
-  }
+  // Function to mint tokens from another contract
+  function mintCollectibleId(
+    address to,
+    uint256 tokenId,
+    uint256 amount
+  ) public onlyShop {
+    require(tokenTotalSupply[tokenId] >= amount, "Exceeds token total supply");
+    _mint(to, tokenId, amount, "");
 
-  // The following functions are overrides required by Solidity.
-
-  function tokenURI(uint256 tokenId)
-    public
-    view
-    override(ERC721, ERC721URIStorage)
-    returns (string memory)
-  {
-    return super.tokenURI(tokenId);
-  }
-
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    override(ERC721, ERC721URIStorage)
-    returns (bool)
-  {
-    return super.supportsInterface(interfaceId);
+    // there's asset not depends on supply, todo: update fn ssetup of tokenid
+    tokenTotalSupply[tokenId] -= amount;
   }
 }

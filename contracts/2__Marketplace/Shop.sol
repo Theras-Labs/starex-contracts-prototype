@@ -62,9 +62,11 @@ contract Shop is Ownable {
   event PaymentDistributionAddressChanged(address indexed newAddress);
   event PaymentDistributionPercentageChanged(uint256 newPercentage);
 
-  constructor(address initialOwner, address _pointContract, address _vendor)
-  Ownable(initialOwner)
-   {
+  constructor(
+    address initialOwner,
+    address _pointContract,
+    address _vendor
+  ) Ownable(initialOwner) {
     // Initialize with the owner's address for points and payment distribution
     pointsAddress = _pointContract;
     paymentDistributionAddress = _vendor;
@@ -99,6 +101,7 @@ contract Shop is Ownable {
     require(newPercentage <= 100, "Percentage should be between 0 and 100");
     paymentDistributionPercentage = newPercentage;
   }
+
   // Function for the owner to add a contract to the list
   function addContract(
     address contractAddress,
@@ -113,18 +116,18 @@ contract Shop is Ownable {
     contractCount++;
   }
 
-//   // Function for the owner to remove a contract from the list
-// BUG: contract delete corrupt the data??
-//   function removeContract(uint256 index) public onlyOwner {
-//     require(index < contractCount, "Invalid index");
-//     delete listedContracts[index];
+  //   // Function for the owner to remove a contract from the list
+  // BUG: contract delete corrupt the data??
+  //   function removeContract(uint256 index) public onlyOwner {
+  //     require(index < contractCount, "Invalid index");
+  //     delete listedContracts[index];
 
-//     // Shift the elements to fill the gap
-//     for (uint256 i = index; i < contractCount - 1; i++) {
-//       listedContracts[i] = listedContracts[i + 1];
-//     }
-//     contractCount--;
-//   }
+  //     // Shift the elements to fill the gap
+  //     for (uint256 i = index; i < contractCount - 1; i++) {
+  //       listedContracts[i] = listedContracts[i + 1];
+  //     }
+  //     contractCount--;
+  //   }
 
   // Function to view the list of contracts available for claiming
   function getContractList() public view returns (ContractInfo[] memory) {
@@ -137,7 +140,7 @@ contract Shop is Ownable {
 
   //todo update multiple prices
   //update tags, and category level for sorting
-  // 
+  //
   function addProduct(
     address nftAddress, // change into contractAddress because erc20 items?
     uint256[] memory prices,
@@ -145,15 +148,28 @@ contract Shop is Ownable {
     string memory category,
     uint256 points
   ) public onlyOwner {
-   // Create a new product
-    Product memory newProduct = Product(nftAddress, prices, id_token, category, points);
+    // Create a new product
+    Product memory newProduct = Product(
+      nftAddress,
+      prices,
+      id_token,
+      category,
+      points
+    );
 
     // Add the new product to the mapping
     listedProducts[productCount] = newProduct;
 
     // Increment the product count
     productCount++;
-    emit ProductListed(productCount -1, nftAddress, prices, id_token, category, points);
+    emit ProductListed(
+      productCount - 1,
+      nftAddress,
+      prices,
+      id_token,
+      category,
+      points
+    );
   }
 
   // function removeProduct(uint256 productId) public onlyOwner {
@@ -162,8 +178,7 @@ contract Shop is Ownable {
   //   emit ProductRemoved(productId);
   // }
 
-
-  //TODO: upgrade into multiple cart buy + coupon 
+  //TODO: upgrade into multiple cart buy + coupon
   // redo with multiple PRICES
   function buyProduct(
     uint256 productId,
@@ -171,7 +186,7 @@ contract Shop is Ownable {
     address paymentToken,
     uint256 quantity,
     uint256 tokenType //todo: remove this and use from contracts??
-  ) public payable{
+  ) public payable {
     // require(productId < listedProducts.length, "Invalid product ID");
     Product memory product = listedProducts[productId];
 
@@ -223,17 +238,18 @@ contract Shop is Ownable {
     //   paymentDistributionPercentage) / 100;
 
     // TODO: REUSE MANAGER CLAIM CONTRACT INSTEAD
-     if (tokenType == 2) {
-        // ERC721
-        IUniversalClaim(product.nftAddress)
-          .mintCollectible(msg.sender);
-      } else if (tokenType == 3) {
-        // ERC1155
-        IUniversalClaim(product.nftAddress)
-          .mintCollectibleId(msg.sender, product.id_token, quantity);
-      }
+    if (tokenType == 2) {
+      // ERC721
+      IUniversalClaim(product.nftAddress).mintCollectible(msg.sender);
+    } else if (tokenType == 3) {
+      // ERC1155
+      IUniversalClaim(product.nftAddress).mintCollectibleId(
+        msg.sender,
+        product.id_token,
+        quantity
+      );
+    }
 
-
-      //send points later
+    //send points later
   }
 }
