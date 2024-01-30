@@ -13,14 +13,16 @@ Whether it's solidity language, cairo language, rust language. Everything is her
 
 These contracts facilitate the basic creation of STAREX, management, and interaction with in-game assets, transactions, and special features. Below is an overview of the key contracts and their purposes.
 
-Due to security concern, the submission of the contracts has limited features, and not the final code
+Due to security concern, the submission of the contracts has limited features, and not the final code.
+
+The gameplay consist of min 3 networks which 1 will be the major network and the other are minor network. this network collaboration can promote growth and interesting gameplay. The major network not fully decided yet until our first minting on april 2024.
+the major network will be a new chain while the minor network will be big network like polygon and ethereum.
 
 ## Branches Overview
 
 - [**master:**](#master) This branch serves as the main hub for information and project overview.
-- [**klaytn-hackathon:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/klaytn-hackathon) Submitted for the Klaytn hackathon.
-- [**injective-hackathon:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/injective-hackathon) Submitted for the Injective hackathon.
-- [**viction-hackathon:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/viction-hackathon) Submitted for the Viction hackathon.
+- [**artela:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/artela) Submitted for Artela.
+- [**aeron:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/aeron) Submitted for Aeron .
 
 - [**STARKNET-L2:**](https://github.com/Theras-Labs/starex-starknet-L2-contract) Using Cairo language submitted for any STARKNET hackathon.
 
