@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract AssetContract is ERC1155, Ownable {
+contract SeasonPass is ERC1155, Ownable {
   // Mapping to store the total supply for each token ID
   mapping(uint256 => uint256) public tokenTotalSupply;
 

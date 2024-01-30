@@ -6,18 +6,19 @@ dotenv.config();
 const config: HardhatUserConfig = {
   solidity: "0.8.20",
   networks: {
-    klaytn: {
-      url: "https://public-en-baobab.klaytn.net",
+    aeron: {
+      url: "https://testnet-rpc.areon.network/",
+      chainId: 462,
       accounts:
         process.env.ACCOUNT_KEY !== undefined ? [process.env.ACCOUNT_KEY] : [],
       // 1001
     },
-    inevm: {
-      url: "https://inevm-rpc.caldera.dev",
-      chainId: 1738,
+    artela: {
+      url: "https://betanet-rpc1.artela.network/",
+      chainId: 11822,
       accounts:
         process.env.ACCOUNT_KEY !== undefined ? [process.env.ACCOUNT_KEY] : [],
-      // 1738
+      // 1001
     },
   },
 };

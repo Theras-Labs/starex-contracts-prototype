@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 
-contract MyToken is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
+contract AssetContract is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
   // Mapping to store allowed contracts for minting
   mapping(address => bool) public allowedContracts;
 
@@ -87,7 +87,7 @@ contract MyToken is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     address account,
     uint256 id,
     uint256 value
-  ) public onlyShop {
+  ) public override onlyShop {
     super.burn(account, id, value);
   }
 
@@ -96,7 +96,7 @@ contract MyToken is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     address account,
     uint256[] memory ids,
     uint256[] memory values
-  ) public onlyShop {
+  ) public override onlyShop {
     super.burnBatch(account, ids, values);
   }
 }

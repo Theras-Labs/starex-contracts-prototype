@@ -10,7 +10,7 @@ async function main() {
   const tokenGEMFactory = await ethers.getContractFactory("EXGEM");
   const nftAssetFactory = await ethers.getContractFactory("AssetContract");
   const nftTicketFactory = await ethers.getContractFactory("TICKET");
-  const nftPassFactory = await ethers.getContractFactory("SeasonPASS");
+  const nftPassFactory = await ethers.getContractFactory("SeasonPass");
   const nftStarShipFactory = await ethers.getContractFactory("NFT_starship");
   const Shop__factory = await ethers.getContractFactory("Shop");
   const ManagerClaim__factory = await ethers.getContractFactory("ManagerClaim");
@@ -66,8 +66,8 @@ async function main() {
   //0
   await MANAGER_CLAIM.connect(deployer).addContract(
     NFT_PASS.address,
-    "pass",
-    "2"
+    "NFT PASS",
+    "3"
   );
   //1
   await MANAGER_CLAIM.connect(deployer).addContract(
@@ -91,7 +91,7 @@ async function main() {
   await MANAGER_CLAIM.connect(deployer).addContract(
     NFT_STARSHIP.address,
     "NFT_STARSHIP",
-    "3"
+    "2"
   );
   //5
   await MANAGER_CLAIM.connect(deployer).addContract(
@@ -118,7 +118,8 @@ async function main() {
   await SHOP.connect(deployer).addPaymentToken(TOKEN_GEM.address, "EX GEM");
   await SHOP.connect(deployer).addProduct(
     NFT_PASS.address,
-    [BigNumber.from("10000000000000000000")],
+    [BigNumber.from("0"), BigNumber.from("1000000000000000000")],
+
     0,
     "pass",
     0
@@ -127,7 +128,7 @@ async function main() {
   // ticket 1
   await SHOP.connect(deployer).addProduct(
     NFT_TICKET.address,
-    [BigNumber.from("1000000000000000000")],
+    [BigNumber.from("0"), BigNumber.from("1000000000000000000")],
     0,
     "ticket",
     0
@@ -136,7 +137,7 @@ async function main() {
   // ship 2
   await SHOP.connect(deployer).addProduct(
     NFT_STARSHIP.address,
-    [BigNumber.from("25000000000000000000")],
+    [BigNumber.from("0"), BigNumber.from("1000000000000000000")],
     0,
     "ship",
     0
@@ -145,7 +146,8 @@ async function main() {
   // asset 3
   await SHOP.connect(deployer).addProduct(
     NFT_ASSET.address,
-    [BigNumber.from("5000000000000000000")],
+    [BigNumber.from("0"), BigNumber.from("1000000000000000000")],
+
     0,
     "asset",
     0
@@ -153,7 +155,7 @@ async function main() {
 
   await SHOP.connect(deployer).addProduct(
     NFT_ASSET.address,
-    [BigNumber.from("5000000000000000000")],
+    [BigNumber.from("0"), BigNumber.from("1000000000000000000")],
     0,
     "asset",
     0
