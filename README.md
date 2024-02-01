@@ -22,7 +22,7 @@ the major network will be a new chain while the minor network will be big networ
 
 - [**master:**](#master) This branch serves as the main hub for information and project overview.
 - [**artela:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/artela) Submitted for Artela.
-- [**aeron:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/aeron) Submitted for Aeron .
+- [**areon:**](https://github.com/Theras-Labs/starex-contracts-prototype/tree/areon) Submitted for Areon .
 
 - [**STARKNET-L2:**](https://github.com/Theras-Labs/starex-starknet-L2-contract) Using Cairo language submitted for any STARKNET hackathon.
 
