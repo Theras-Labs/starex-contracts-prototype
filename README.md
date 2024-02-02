@@ -13,6 +13,21 @@ This repository contains the Solidity smart contracts that govern various aspect
 
 *PITCH DECK and WHITEPAPER on pdfs folder
 
+
+## Project Objectives:
+STAR-EX, (EXPLORE, EXPEDITION) a groundbreaking CROSS-CHAIN web3 game that combines the thrill of exploration with the excitement of an incremental speed challenge.
+his innovative concept encourages NETWORK COLLABORATION, where minority networks stand to gain exposure through in-game interactions and seasonal events. The dynamic in-game economy will be influenced by factors specific to each network, affecting asset values and drop rates. Stay tuned for more exciting details as we navigate the challenges of the hackathon and bring this cosmic adventure to life.
+
+For Solo Exploration, players take control of a spaceship on an expedition through space, aptly named "ex" for exploration. Much like the classic Temple Run but now in 360 space with more fun abilities, the game dynamically increases in speed, presenting players with ever-growing challenges to survive.
+
+In this interstellar adventure, players must navigate their spaceship through a cosmic obstacle course, avoiding rocks, monsters, and powerful boss encounters. The longer they last, the faster and more challenging the game becomes. Survival is key, but there's a catch—limited supplies of abilities and energy are essential for prolonged gameplay.  Players can discover unique items scattered throughout the in-game space. These items, represented as NFTs (Non-Fungible Tokens), not only grant special abilities but can also be traded in a marketplace, allowing players to turn their in-game achievements into real-world profit. Crafting items is crucial for obtaining the energy needed to activate powerful abilities, providing an additional layer of strategy. The scarcity of these resources adds depth to the gameplay, requiring players to make strategic decisions about when to use their items and abilities.
+
+As the game progresses, Star-Ex evolves beyond its action roots. Players can choose to stake their spaceships as playing the MISSION and rewarding stake, transforming the experience into an idle game. This integration of action and idle gaming mechanics, combined with the NFT marketplace, creates a unique and sustainable gaming ecosystem. This game is actually not just action-arcade but my goal to make it into "Action-Idle RPG" as each spaceship has their own abilities, and some dimension location will be some weakness and strength depending for each spaceship, while it also provide stats that will carry within each NFTs.
+
+
+## Technical framework:
+- for Game we are utilising Threejs engine that capable to perform in high quality with WEBGPU compatibility.
+
 ### Smart Contracts
 
 1. **GEMTOKEN or fUSD**
@@ -94,3 +109,65 @@ Additional contracts will be introduced later. Stay tuned for updates on new fea
 For any inquiries or issues, please contact our development team.
 
 ![Game Contracts](./pics.png)
+
+
+## Team expertise:
+Current team:
+
+**1. Dale (me):**
+I play a pivotal role in the project, seamlessly blending technical expertise with strategic vision, designing the game model, envisioning innovative gameplay experiences. 
+
+Taking a lead role in architecting the business model, leveraging my strategic thinking to ensure the project's long-term success. My responsibilities span the entire development lifecycle, from coding and infrastructure to envisioning the business model and engaging with the community.
+Role: 
+- Unicorn Developer (FE,BE, Mobile, Contract)
+- Game and Business Designer
+- Docs, Community, and Publication
+
+In the future when funded ofc i want to release some of them and focused on taking Lead. 
+
+previously I work as fullstack developer for 6years exp, the last team i joined was [0xpragma](0xpragma.com/network) a blockchain focused team that been working with [PlanetIX](ix.foundation) for 2 years that once was a no.1 polygon blockchain. I contribute in their DeFi and Frontend mostly while also contributed in several web3 projects in contract and fullstack development: 
+1. Kindeck that become Alcacor ( a social NFT project )
+2. Midas that become IONIC (DeFi)
+3. SocialFi
+
+- [github](https://github.com/dellwatson) - [twitter](https://twitter.com/dev_dellwatson) - [playstore](https://play.google.com/store/apps/dev?id=5858814158930016257) - [appstore](https://apps.apple.com/id/developer/dale-watson/id1531628326)  - [linkedin](https://linkedin/in/dellwatson) 
+
+
+
+
+
+### The team below isn't joining hackathon and focusing on first selling plan.
+
+**2. Esta**
+a 3D artist, responsible turning the concept into 3D model that team can use in-game, in-filmmaking, or sell it as NFT. Making sure the standard 3d development across the project.
+- [Instagram](https://www.instagram.com/esta.claresta/)
+- [Portfolio]()
+- [Linkedin](www.linkedin.com/in/claresta-lemuella)
+
+Skills: Houdini, Maya, Blender
+
+**3. Theodore**
+a Filmmaker, a vfx specialist, responsible to create awesome trailer, and video engagement to the community.
+- he doesn't have social but his work can be seen from his [teammate instagram](https://www.instagram.com/ggilbertmarch/). He works as the vfx specialist since the college 2013
+
+Skills: Cine4D, Adobe, Unreal-Engine, Blender
+
+
+**4. Siya**
+Documenter, and manage schedule for events. podcast, and AMA
+
+**5. Lamarn**
+Community Manager, Mod, and take care of social media under my supervision.
+
+**6. Leo**
+a Filmmaker, a vfx specialist, responsible to create awesome trailer, and video engagement to the community.
+
+
+
+Influencers: (These are my cousins XD)
+1. Lala: [Twitter](https://twitter.com/kalalaaa__?lang=en) 
+2. Keniro: [Tiktok](https://www.tiktok.com/@kenniro?lang=en) [instagram](https://www.instagram.com/kenniro_/)
+3. Annie  (Shanghai based, aim for chinese market later)
+
+
+In the future when team expands,  i want my early core team can lead for their respective department.
