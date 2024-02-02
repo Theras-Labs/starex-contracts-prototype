@@ -7,6 +7,12 @@
 This repository contains the Solidity smart contracts that govern various aspects of our blockchain-based game. These contracts facilitate the creation, management, and interaction with in-game assets, transactions, and special features. Below is an overview of the key contracts and their purposes.
 \*Due to security concern, the submission of the contracts has limited features, and intended for early architecture, and not the final code which is using upgradeable contract
 
+### 3 Mins Gameplay explained:
+
+[![Starknet Update](https://img.youtube.com/vi/pi8XSNQL1fU/0.jpg)](https://www.youtube.com/watch?v=pi8XSNQL1fU)
+
+*PITCH DECK and WHITEPAPER on pdfs folder
+
 ### Smart Contracts
 
 1. **GEMTOKEN or fUSD**
